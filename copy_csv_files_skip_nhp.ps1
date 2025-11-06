@@ -1,6 +1,30 @@
-$mainFolders = @("DWLR_118x2", "DWLR", "DWLR_118x3")
+<#
+.SYNOPSIS
+PowerShell script to copy CSV files from specified folders while skipping folders with 'nhp' in their names.
 
-$outputFolder = "gwfiles"             
+.DESCRIPTION
+This script searches for CSV files in drishti_backup folders within the specified main folders.
+It skips any folders containing 'nhp' in their names and copies files modified within the last 30 days.
+
+.PARAMETER MainFolders
+Array of folder paths to search for CSV files. Default: @("DWLR_118x2", "DWLR", "DWLR_118x3")
+
+.PARAMETER OutputFolder
+Destination folder for copied CSV files. Default: "gwfiles"
+
+.EXAMPLE
+.\copy_csv_files_skip_nhp.ps1 -MainFolders @("C:\MyFolder1", "C:\MyFolder2") -OutputFolder "C:\Output"
+
+.EXAMPLE
+.\copy_csv_files_skip_nhp.ps1
+#>
+param(
+    [Parameter(Mandatory=$false)]
+    [string[]]$MainFolders = @("DWLR_118x2", "DWLR", "DWLR_118x3"),
+    
+    [Parameter(Mandatory=$false)]
+    [string]$OutputFolder = "gwfiles"
+)
 
 if (-not (Test-Path $outputFolder)) {
     New-Item -ItemType Directory -Path $outputFolder -Force | Out-Null
